@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experiment 2 - Form Validation</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f4f4;
+}
+
+.container{
+    width:400px;
+    margin:50px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#218838;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+}
+
+.success{
+    color:green;
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>User Registration Form</h2>
+
+<form id="myForm">
+
+<label>Name</label>
+<input type="text" id="name" placeholder="Enter your name">
+<span class="error" id="nameError"></span>
+
+<label>Email</label>
+<input type="text" id="email" placeholder="Enter your email">
+<span class="error" id="emailError"></span>
+
+<label>Phone Number</label>
+<input type="text" id="phone" placeholder="Enter 10-digit phone number">
+<span class="error" id="phoneError"></span>
+
+<button type="submit">Submit</button>
+
+<p id="successMsg" class="success"></p>
+
+</form>
+
+</div>
+
+<script>
+
+const nameInput=document.getElementById("name");
+const emailInput=document.getElementById("email");
+const phoneInput=document.getElementById("phone");
+
+const nameError=document.getElementById("nameError");
+const emailError=document.getElementById("emailError");
+const phoneError=document.getElementById("phoneError");
+
+function validateName(){
+
+let pattern=/^[A-Za-z ]+$/;
+
+if(nameInput.value.trim()==""){
+nameError.innerHTML="Name is required";
+return false;
+}
+else if(!pattern.test(nameInput.value)){
+nameError.innerHTML="Only alphabets allowed";
+return false;
+}
+else{
+nameError.innerHTML="";
+return true;
+}
+
+}
+
+function validateEmail(){
+
+let pattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(emailInput.value==""){
+emailError.innerHTML="Email is required";
+return false;
+}
+else if(!pattern.test(emailInput.value)){
+emailError.innerHTML="Invalid Email";
+return false;
+}
+else{
+emailError.innerHTML="";
+return true;
+}
+
+}
+
+function validatePhone(){
+
+let pattern=/^[0-9]{10}$/;
+
+if(phoneInput.value==""){
+phoneError.innerHTML="Phone number is required";
+return false;
+}
+else if(!pattern.test(phoneInput.value)){
+phoneError.innerHTML="Enter a valid 10-digit phone number";
+return false;
+}
+else{
+phoneError.innerHTML="";
+return true;
+}
+
+}
+
+/* Real-time Validation */
+
+nameInput.addEventListener("keyup",validateName);
+emailInput.addEventListener("keyup",validateEmail);
+phoneInput.addEventListener("keyup",validatePhone);
+
+/* Form Validation */
+
+document.getElementById("myForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let a=validateName();
+let b=validateEmail();
+let c=validatePhone();
+
+if(a && b && c){
+
+document.getElementById("successMsg").innerHTML=
+"Form Submitted Successfully!";
+
+}
+else{
+
+document.getElementById("successMsg").innerHTML="";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
